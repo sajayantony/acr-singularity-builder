@@ -27,8 +27,8 @@ done
 shift "$(($OPTIND -1))"
 
 #ACR Populates the docker config for you if you have authentication enabled.
-export SINGULARITY_DOCKER_USERNAME=$(cat ~/.docker/config.json | jq -r  '.auths."$REGISTRY".auth' | base64 -d -)
-export SINGULARITY_DOCKER_PASSWORD=$(cat ~/.docker/config.json | jq -r  '.auths."$REGISTRY".identitytoken')
+export SINGULARITY_DOCKER_USERNAME=$(cat ~/.docker/config.json | jq -r --arg r $REGISTRY '.auths[$r].auth' | base64 -d - |  cut -d ':' -f 1)
+export SINGULARITY_DOCKER_PASSWORD=$(cat ~/.docker/config.json | jq -r --arg r $REGISTRY '.auths[$r].identitytoken')
 
 if [ -z "$SINGULARITY_DOCKER_USERNAME" ]
     then
@@ -39,7 +39,6 @@ if [ -z "$SINGULARITY_DOCKER_PASSWORD" ]
     then
        echo ERR: SINGULARITY_DOCKER_PASSWORD not set. 
 fi
-
 
 
 echo "Building DEF: $DEFINITION_FILE"
