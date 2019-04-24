@@ -1,8 +1,8 @@
 steps:
   - cmd: |
-    {{.Run.Registry}}/singularity-builder:v3
-    -f {{.Values.DefinitionFile}}
-    -o {{.Values.SIFOutput}}
-    -t {{.Values.Image}}
-    -r {{.Run.Registry}} 
+      {{.Run.Registry}}/singularity-builder:v3
+      -f {{.Values.DefinitionFile}}
+      -o {{.Values.SIFOutput}}
+      -t {{.Values.Image}}
+      -r {{.Run.Registry}} 
     privileged : true
